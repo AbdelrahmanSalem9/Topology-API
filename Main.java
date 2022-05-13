@@ -23,7 +23,12 @@ public class Main {
         topo.connect("res1", "t2", "n1");
         topo.queryDevicesWithNetlistNode("n2");
 
-        // topo.queryTopology();
+        // TODO read and write json files locally handle delete topologies objects
+        // What is gradle and maven
+        // API documentation
+        // class level documentaion
+        // Automatic testing on API level and and class level
+        // code analysis tool
 
     }
 }

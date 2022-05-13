@@ -2,8 +2,8 @@ import java.util.ArrayList;
 
 public class Topology {
 
-    String topologyId;
-    ArrayList<Device> devices;
+    private String topologyId;
+    private ArrayList<Device> devices;
 
     public Topology(String topologyId) {
         this.topologyId = topologyId;

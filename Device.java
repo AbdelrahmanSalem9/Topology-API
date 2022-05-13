@@ -4,7 +4,7 @@ import java.util.Map;
 public abstract class Device implements DeviceQuery {
 
     String deviceType;
-    Map<String, String> netList;
+    private Map<String, String> netList;
 
     protected Device(String deviceType) {
         this.deviceType = deviceType;
@@ -13,6 +13,8 @@ public abstract class Device implements DeviceQuery {
     }
 
     public void connectNetListNode(String terminal, String node) {
+
+        // TODO define the terminal in the concrete class
         netList.put(terminal, node);
     }
 
