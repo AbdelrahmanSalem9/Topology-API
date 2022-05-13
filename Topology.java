@@ -10,13 +10,13 @@ public class Topology {
         devices = new ArrayList<Device>();
     }
 
-    public void newComponent(String deviceName, float defaultValue, float minValue, float maxValue) {
+    public void newComponent(String deviceType, String deviceId, float defaultValue, float minValue, float maxValue) {
 
-        if (deviceName.contains("res"))
-            devices.add(new Resistor(deviceName, defaultValue, minValue, maxValue));
+        if (deviceType.contains("resistor"))
+            devices.add(new Resistor(deviceId, defaultValue, minValue, maxValue));
 
-        else if (deviceName.contains("nmos"))
-            devices.add(new NMOS(deviceName, defaultValue, minValue, maxValue));
+        else if (deviceType.contains("nmos"))
+            devices.add(new NMOS(deviceId, defaultValue, minValue, maxValue));
     }
 
     public void queryTopology() {
@@ -30,6 +30,32 @@ public class Topology {
                 System.out.println("----------------------------------------------------");
 
             }
+        }
+    }
+
+    // TODO define the component terminals internally then check if terminal exist
+    public void connect(String componentId, String terminal, String node) {
+
+        for (Device d : devices) {
+
+            if (d.getComponentId() == componentId) {
+                d.connectNetListNode(terminal, node);
+                return;
+            }
+        }
+        System.out.println("Component Not Found");
+
+    }
+
+    // TODO return devices or void return
+    public void queryDevicesWithNetlistNode(String node) {
+
+        System.out.println("Connected Component to " + node);
+        for (Device d : devices) {
+            if (d.isConnected(node)) {
+                System.out.println(d.getComponentId());
+            }
+
         }
     }
 

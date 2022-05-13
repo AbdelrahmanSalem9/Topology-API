@@ -1,3 +1,4 @@
+
 public class Resistor extends Device {
 
     private String resistorId;
@@ -11,9 +12,15 @@ public class Resistor extends Device {
 
     @Override
     public void query() {
-        System.out.println("Component: " + super.deviceName);
+        System.out.println("Component: " + super.deviceType);
         System.out.println("id: " + resistorId);
         resistorSpecs.getSpecs();
 
     }
+
+    @Override
+    public String getComponentId() {
+        return resistorId;
+    }
+
 }

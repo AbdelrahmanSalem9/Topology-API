@@ -11,9 +11,15 @@ public class NMOS extends Device {
 
     @Override
     public void query() {
-        System.out.println("Component: " + super.deviceName);
+        System.out.println("Component: " + super.deviceType);
         System.out.println("id: " + nmosId);
         nmosSpecs.getSpecs();
 
     }
+
+    @Override
+    public String getComponentId() {
+        return nmosId;
+    }
+
 }

@@ -13,13 +13,17 @@ public class Main {
         // System.out.println("----------------------------------------------------");
         // }
         Topology topo = new Topology("top1");
-        topo.newComponent("res1", 1, 2, 3);
-        topo.newComponent("res2", 4, 5, 6);
-        topo.newComponent("res3", 7, 8, 9);
-        topo.newComponent("nmos1", 7, 8, 9);
-        topo.newComponent("nmos2", 10, 12, 13);
+        topo.newComponent("resistor", "res1", 1, 2, 3);
+        topo.newComponent("resistor", "res2", 4, 5, 6);
+        topo.newComponent("resistor", "res3", 7, 8, 9);
+        topo.newComponent("nmos", "m1", 7, 8, 9);
+        topo.newComponent("nmos", "m2", 10, 12, 13);
 
-        topo.queryTopology();
+        topo.connect("m1", "grain", "n1");
+        topo.connect("res1", "t2", "n1");
+        topo.queryDevicesWithNetlistNode("n2");
+
+        // topo.queryTopology();
 
     }
 }
