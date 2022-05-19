@@ -1,3 +1,4 @@
+package components;
 public interface DeviceQuery {
 
     void query();

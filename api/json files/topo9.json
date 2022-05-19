@@ -1,0 +1,1 @@
+{"components":[{"netlist":{"t1":"n1","t2":"vcc"},"id":"r9","type":"resistor","resistance":{"default":10.0,"min":8.0,"max":12.0}},{"netlist":{"t1":"n2","t2":"gnd"},"id":"r99","type":"resistor","resistance":{"default":11.0,"min":19.0,"max":88.0}}],"id":"topo9"}

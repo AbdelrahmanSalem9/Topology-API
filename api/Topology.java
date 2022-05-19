@@ -1,4 +1,7 @@
+package api;
+
 import java.util.ArrayList;
+import components.*;
 
 public class Topology {
 
@@ -19,12 +22,11 @@ public class Topology {
             devices.add(new NMOS(deviceId, defaultValue, minValue, maxValue));
     }
 
-    public void queryTopology() {
+    public void queryTopologyDevices() {
 
         if (devices.isEmpty()) {
             System.out.println("No Devices Found");
         } else {
-            System.out.println("Topology: " + topologyId);
             for (Device d : devices) {
                 d.query();
                 System.out.println("----------------------------------------------------");
@@ -33,7 +35,14 @@ public class Topology {
         }
     }
 
-    // TODO define the component terminals internally then check if terminal exist
+    public String getTopologyId() {
+        return topologyId;
+    }
+
+    ArrayList<Device> getDevices() {
+        return devices;
+    }
+
     public void connect(String componentId, String terminal, String node) {
 
         for (Device d : devices) {
@@ -47,7 +56,6 @@ public class Topology {
 
     }
 
-    // TODO return devices or void return
     public void queryDevicesWithNetlistNode(String node) {
 
         System.out.println("Connected Component to " + node);

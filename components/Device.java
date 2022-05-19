@@ -1,9 +1,11 @@
+package components;
+
 import java.util.HashMap;
 import java.util.Map;
 
-public abstract class Device implements DeviceQuery {
+public abstract class Device implements DeviceQuery, JsonQuery {
 
-    String deviceType;
+    protected String deviceType;
     private Map<String, String> netList;
 
     protected Device(String deviceType) {
@@ -13,14 +15,22 @@ public abstract class Device implements DeviceQuery {
     }
 
     public void connectNetListNode(String terminal, String node) {
-
-        // TODO define the terminal in the concrete class
         netList.put(terminal, node);
+    }
+
+    @Override
+    public String getDeviceType() {
+        return deviceType;
     }
 
     @Override
     public boolean isConnected(String node) {
         return netList.containsValue(node);
 
+    }
+
+    @Override
+    public Map<String, String> getNetlist() {
+        return netList;
     }
 }
