@@ -3,58 +3,30 @@ package api;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class handles all the client queries from
+ * 1- read/write topology from/to json file
+ * 2- query all the toplogies stored currently in the system memory
+ * 3- delete specific topology from the memory
+ * 4- query all the devices in specific toplogy
+ * 5- query all the devices connected to specific node inside the toplogy
+ * network
+ */
 public class TopologyAPI {
 
-    private Map<String, Topology> topologies;
-    private JsonHandler jsonHandler;
+    private Map<String, Topology> topologies; // all topologies stored currently in the memory
+    private JsonHandler jsonHandler; // class object that handles all the read/write operations
 
     public TopologyAPI() {
         topologies = new HashMap<>();
         jsonHandler = new JsonHandler();
     }
 
-    public static void main(String[] args) {
-
-        // Topology topo = new Topology("top1");
-        // topo.newComponent("resistor", "res1", 1, 2, 3);
-        // topo.newComponent("resistor", "res2", 4, 5, 6);
-        // topo.newComponent("resistor", "res3", 7, 8, 9);
-        // topo.newComponent("nmos", "m1", 7, 8, 9);
-        // topo.newComponent("nmos", "m2", 10, 12, 13);
-
-        // topo.connect("m1", "grain", "n1");
-        // topo.connect("res1", "t2", "n1");
-        // topo.queryDevicesWithNetlistNode("n1");
-        // topo.queryTopology();
-
-        JsonHandler jsonHandler = new JsonHandler();
-        // Topology topology = jsonHandler.readJsonFile("E:/College/Master Micro/Stage
-        // 1/Task 2/api/topology.json");
-        // topology.queryTopology();
-        // topology.queryDevicesWithNetlistNode("n1");
-
-        Topology t1 = new Topology("topo9");
-        t1.newComponent("resistor", "r9", 10, 8, 12);
-        t1.newComponent("resistor", "r99", 11, 19, 88);
-        t1.connect("r9", "t1", "n1");
-        t1.connect("r9", "t2", "vcc");
-
-        t1.connect("r99", "t1", "n2");
-        t1.connect("r99", "t2", "gnd");
-
-        t1.queryTopologyDevices();
-        t1.queryDevicesWithNetlistNode("n1");
-
-        jsonHandler.writeTopo(t1);
-
-        // What is gradle and maven
-        // API documentation
-        // class level documentaion
-        // Automatic testing on API level and and class level
-        // code analysis tool
-
-    }
-
+    /**
+     * delete specific topology from the system and discard it from the memroy
+     * 
+     * @param topoId
+     */
     public void deleteTopology(String topoId) {
 
         if (topologies.containsKey(topoId)) {
@@ -65,6 +37,11 @@ public class TopologyAPI {
 
     }
 
+    /**
+     * identifiy which json file that holding the topology network to read
+     * 
+     * @param fileName
+     */
     public void readJSON(String fileName) {
 
         Topology topo = jsonHandler.readJsonFile(fileName);
@@ -72,6 +49,12 @@ public class TopologyAPI {
 
     }
 
+    /**
+     * write the topology to json file and store it locally in pre-defined path
+     * "./api/json files/"
+     * 
+     * @param topoId
+     */
     public void writeJSON(String topoId) {
 
         if (topologies.containsKey(topoId)) {
@@ -79,15 +62,30 @@ public class TopologyAPI {
         }
     }
 
+    /**
+     * method overload for writing newly created topology object to json file
+     * 
+     * @param topo
+     */
     public void writeJSON(Topology topo) {
         addTopology(topo);
         jsonHandler.writeTopo(topo);
     }
 
+    /**
+     * add topology to the system
+     * 
+     * @param topo
+     */
     public void addTopology(Topology topo) {
         topologies.put(topo.getTopologyId(), topo);
     }
 
+    /**
+     * Iterate over all devices connected to that specific topology id
+     * 
+     * @param topoId
+     */
     public void queryDevices(String topoId) {
         if (topologies.containsKey(topoId)) {
             topologies.get(topoId).queryTopologyDevices();
@@ -97,6 +95,9 @@ public class TopologyAPI {
         }
     }
 
+    /**
+     * Query all the currenly stored topologies id in the memory
+     */
     public void queryToplogies() {
 
         for (Map.Entry<String, Topology> entry : topologies.entrySet()) {
@@ -104,7 +105,20 @@ public class TopologyAPI {
         }
     }
 
-    public void queryDevicesWithNetlistNode(Topology topo, String node) {
-        topo.queryDevicesWithNetlistNode(node);
+    /**
+     * Speicify topology with node and retrive all the conneceted components to that
+     * node
+     * 
+     * @param topoId
+     * @param node
+     */
+    public void queryDevicesWithNetlistNode(String topoId, String node) {
+        if (topologies.containsKey(topoId)) {
+            topologies.get(topoId).queryDevicesWithNetlistNode(node);
+            ;
+        } else {
+            System.out.println("No such Topology");
+
+        }
     }
 }
