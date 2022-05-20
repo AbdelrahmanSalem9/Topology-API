@@ -23,16 +23,18 @@ public class TopologyAPI {
     }
 
     /**
-     * delete specific topology from the system and discard it from the memroy
      * 
      * @param topoId
+     * @return true if delete operation done successfully
      */
-    public void deleteTopology(String topoId) {
+    public boolean deleteTopology(String topoId) {
 
         if (topologies.containsKey(topoId)) {
             topologies.remove(topoId);
+            return true;
         } else {
             System.out.println("No such Topology");
+            return false;
         }
 
     }
@@ -41,12 +43,17 @@ public class TopologyAPI {
      * identifiy which json file that holding the topology network to read
      * 
      * @param fileName
+     * @return true if reading topology file successfully
      */
-    public void readJSON(String fileName) {
+    public boolean readJSON(String fileName) {
 
         Topology topo = jsonHandler.readJsonFile(fileName);
-        topologies.put(topo.getTopologyId(), topo);
+        if (topo != null) {
+            topologies.put(topo.getTopologyId(), topo);
+            return true;
 
+        }
+        return false;
     }
 
     /**
@@ -54,55 +61,78 @@ public class TopologyAPI {
      * "./api/json files/"
      * 
      * @param topoId
+     * @return true if write opeation done successfully
      */
-    public void writeJSON(String topoId) {
+    public boolean writeJSON(String topoId) {
 
         if (topologies.containsKey(topoId)) {
             jsonHandler.writeTopo(topologies.get(topoId));
+            return true;
         }
+        return false;
     }
 
     /**
      * method overload for writing newly created topology object to json file
      * 
      * @param topo
+     * @return true if write operation done successfully
      */
-    public void writeJSON(Topology topo) {
+    public boolean writeJSON(Topology topo) {
         addTopology(topo);
         jsonHandler.writeTopo(topo);
+        return true;
     }
 
     /**
      * add topology to the system
      * 
      * @param topo
+     * @return true of adding new topology to the memory done successfully
      */
-    public void addTopology(Topology topo) {
-        topologies.put(topo.getTopologyId(), topo);
+    public boolean addTopology(Topology topo) {
+        try {
+            topologies.put(topo.getTopologyId(), topo);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+
     }
 
     /**
      * Iterate over all devices connected to that specific topology id
      * 
      * @param topoId
+     * @return true reteriving all devices successfully
      */
-    public void queryDevices(String topoId) {
+    public boolean queryDevices(String topoId) {
         if (topologies.containsKey(topoId)) {
             topologies.get(topoId).queryTopologyDevices();
+            return true;
         } else {
             System.out.println("No such Topology");
 
         }
+        return false;
     }
 
     /**
      * Query all the currenly stored topologies id in the memory
+     * 
+     * @return true when reteriving all the topologies from memory successfully
      */
-    public void queryToplogies() {
+    public boolean queryToplogies() {
+
+        if (topologies.size() == 0) {
+            return false;
+        }
 
         for (Map.Entry<String, Topology> entry : topologies.entrySet()) {
             System.out.println(entry.getKey());
         }
+        return true;
     }
 
     /**
@@ -111,14 +141,25 @@ public class TopologyAPI {
      * 
      * @param topoId
      * @param node
+     * @return true if operation done successfully
      */
-    public void queryDevicesWithNetlistNode(String topoId, String node) {
+    public boolean queryDevicesWithNetlistNode(String topoId, String node) {
         if (topologies.containsKey(topoId)) {
             topologies.get(topoId).queryDevicesWithNetlistNode(node);
-            ;
+            return true;
         } else {
             System.out.println("No such Topology");
 
         }
+        return false;
     }
+
+    /**
+     * 
+     * @return all Topologies currently in the system memory
+     */
+    public Map<String, Topology> getToplogies() {
+        return topologies;
+    }
+
 }

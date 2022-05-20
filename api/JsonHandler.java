@@ -19,7 +19,7 @@ public class JsonHandler {
     private Topology topo;
 
     public Topology readJsonFile(String path) {
-
+        System.out.println(path);
         JSONParser jsonParser = new JSONParser();
         try (FileReader fileReader = new FileReader(path)) {
 

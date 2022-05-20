@@ -17,13 +17,14 @@ public class Main {
         topo.connect("m1", "gate", "n1");
         topo.connect("res1", "t2", "n1");
 
-        topologyAPI.readJSON("./api/json files/topo9.json");
+        topologyAPI.readJSON("./api/json files/topology.json");
         topologyAPI.queryToplogies();
-        topologyAPI.queryDevices("topo9");
-        topologyAPI.addTopology(topo);
-        topologyAPI.queryToplogies();
-        topologyAPI.queryDevices("topo1");
-        topologyAPI.writeJSON("topo1");
+        topologyAPI.queryDevices("top1");
+        // topologyAPI.addTopology(topo);
+        // topologyAPI.queryToplogies();
+        // topologyAPI.queryDevices("topo1");
+        // topologyAPI.writeJSON("topo1");
+        // topologyAPI.queryDevicesWithNetlistNode("topo1", "n1");
     }
 
 }
